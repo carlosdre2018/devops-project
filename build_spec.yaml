@@ -1,0 +1,23 @@
+version: 1.0
+steps:
+  - step: 
+      name: "Build Docker Image"
+      shell: bash
+      commands:
+        - echo "Construyendo imagen Docker..."
+        - docker build -t my-app-image .
+
+  - step:
+      name: "Login to OCI Container Registry"
+      shell: bash
+      commands:
+        - echo "Iniciando sesión en OCI Container Registry..."
+        - echo "$OCIR_PASSWORD" | docker login -u "$OCIR_USERNAME" --password-stdin $OCIR_REGISTRY
+
+  - step:
+      name: "Push Docker Image to OCI"
+      shell: bash
+      commands:
+        - echo "Subiendo imagen a OCI Container Registry..."
+        - docker tag my-app-image $OCIR_REGISTRY/your-namespace/my-app-image:latest
+        - docker push $OCIR_REGISTRY/your-namespace/my-app-image:latest
