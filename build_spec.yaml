@@ -1,4 +1,8 @@
 version: 1.0
+component: build
+timeoutInSeconds: 6000
+runAs: root
+shell: bash
 steps:
   - step: 
       name: "Build Docker Image"
