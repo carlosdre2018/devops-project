@@ -1,28 +1,11 @@
 version: 0.1
-component: build
-timeoutInSeconds: 6000
-runAs: root
-shell: bash
-
 steps:
-  - step: 
-      name: "Build Docker Image"
-      shell: bash
-      commands:
-        - echo "Construyendo imagen Docker..."
-        - docker build -t my-app-image .
-
-  - step:
-      name: "Login to OCI Container Registry"
-      shell: bash
-      commands:
-        - echo "Iniciando sesión en OCI Container Registry..."
-        - echo "wsaT8M>Hyn6mD>(eI_j9" | docker login -u "idxjlayq5rjd/cchavez@valmersys.com" --password-stdin iad.ocir.io
-
-  - step:
-      name: "Push Docker Image to OCI"
-      shell: bash
-      commands:
-        - echo "Subiendo imagen a OCI Container Registry..."
-        - docker tag my-app-image iad.ocir.io/mi-namespace/my-app-image:latest
-        - docker push iad.ocir.io/idxjlayq5rjd/contenedor1:latest
+  - name: Build Docker Image
+    timeoutInSeconds: 600
+    run: |
+      docker build -t imagen-prueba1:latest .
+  - name: Push Docker Image to OCI Registry
+    timeoutInSeconds: 600
+    run: |
+      docker tag imagen-prueba1:latest iad.ocir.io/idxjlayq5rjd/contenedor1:latest
+      docker push iad.ocir.io/idxjlayq5rjd/contenedor1:latest
