@@ -1,13 +1,18 @@
 version: 0.1
-phases:
-  build:
-    steps:
-      - name: Build Docker Image
-        timeoutInSeconds: 600
-        run: |
-          docker build -t imagen-prueba1:latest .
-      - name: Push Docker Image to OCI Registry
-        timeoutInSeconds: 600
-        run: |
-          docker tag imagen-prueba1:latest iad.ocir.io/idxjlayq5rjd/contenedor1:latest
-          docker push iad.ocir.io/idxjlayq5rjd/contenedor1:latest
+component: build
+timeoutInSeconds: 10000
+shell: bash
+failImmediatelyOnError: true
+
+steps:
+  - type: Command
+    name: Build Docker Image
+    timeoutInSeconds: 600
+    command: |
+      docker build -t imagen-prueba1:latest .
+  - type: Command
+    name: Push Docker Image to OCI Registry
+    timeoutInSeconds: 600
+    command: |
+      docker tag imagen-prueba1:latest iad.ocir.io/idxjlayq5rjd/contenedor1:latest
+      docker push iad.ocir.io/idxjlayq5rjd/contenedor1:latest
